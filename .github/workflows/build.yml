@@ -49,12 +49,12 @@ jobs:
         # upload-artifact@v4.6.1
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1
         with:
-          name: fkg-news-viewer.zip
+          name: fkg-news-viewer
           path: ${{ env.OUT_DIR }}\*
 
       - name: Generate artifact attestation
         # attest-build-provenance@v2.2.2
         uses: actions/attest-build-provenance@bd77c077858b8d561b7a36cbe48ef4cc642ca39d
         with:
-          subject-name: fkg-news-viewer.zip
+          subject-name: fkg-news-viewer
           subject-digest: sha256:${{ steps.upload.outputs.artifact-digest }}
