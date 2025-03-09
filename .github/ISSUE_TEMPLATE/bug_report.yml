@@ -1,14 +1,11 @@
 ﻿name: ':bug: Bug Report'
 description: 'Create a bug report'
+title: '[Bug]: '
 labels: ['bug']
 body:
-  - type: 'textarea'
+  - type: markdown
     attributes:
-      label: 'Title'
-      description: 'Thanks for taking the time to fill out this bug report!'
-      value: '[Bug]: '
-    validations:
-      required: true
+      value: Thanks for taking the time to fill out this bug report!
   - type: 'checkboxes'
     attributes:
       label: 'Version Check'
@@ -34,6 +31,8 @@ body:
     attributes:
       label: 'Environment'
       description: 'Please enter the your OS information.'
-      placeholder: '* Windows 11 24H2 26100.3323\n* x64'
+      placeholder:  |
+        * Windows 11 24H2 26100.3323
+        * x64
     validations:
       required: true
