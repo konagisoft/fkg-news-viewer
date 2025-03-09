@@ -1,0 +1,60 @@
+﻿name: Dotnet Build
+
+on:
+  push:
+    branches: ['main']
+  pull_request:
+    types: ['opened', 'reopened', 'synchronize', 'ready_for_review']
+
+env:
+  DOTNET_VERSION: '8.0.x'
+  OUT_DIR: '.\src\bin\Release\app.publish'
+  LICENSE_NAME: 'THIRD-PARTY-NOTICE.txt'
+
+jobs:
+  build:
+    runs-on: windows-2025
+    permissions:
+      id-token: write
+      attestations: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Add msbuild to PATH
+        # setup-msbuild@v2
+        uses: microsoft/setup-msbuild@6fb02220983dee41ce7ae257b6f4d8f9bf5ed4ce
+
+      - name: Setup Dotnet
+        # setup-dotnet@v4.3.0
+        uses: actions/setup-dotnet@3951f0dfe7a07e2313ec93c75700083e2005cbab
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Restore dependencies
+        run: msbuild -t:Restore -p:RestorePackagesConfig=true
+
+      - name: Build
+        run: msbuild -t:Publish -t:Rebuild -p:Configuration=Release -p:EnableUpdateable=false
+
+      - name: Create third party notices
+        run: |
+          dotnet tool install -g DotnetThirdPartyNotices
+          dotnet-thirdpartynotices .\src --output-filename ${{ env.LICENSE_NAME }}
+          Copy-Item -Path "${{ env.LICENSE_NAME }}" -Destination "${{ env.OUT_DIR }}\${{ env.LICENSE_NAME }}" -Force
+
+      - name: Upload artifact
+        id: upload
+        # upload-artifact@v4.6.1
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1
+        with:
+          name: fkg-news-viewer.zip
+          path: ${{ env.OUT_DIR }}\*
+
+      - name: Generate artifact attestation
+        # attest-build-provenance@v2.2.2
+        uses: actions/attest-build-provenance@bd77c077858b8d561b7a36cbe48ef4cc642ca39d
+        with:
+          subject-name: fkg-news-viewer.zip
+          subject-digest: sha256:${{ steps.upload.outputs.artifact-digest }}
