@@ -1,5 +1,7 @@
 ﻿# FkgNewViewer
 
+[![Dotnet Build](https://github.com/konagisoft/fkg-news-viewer/actions/workflows/build.yml/badge.svg)](https://github.com/konagisoft/fkg-news-viewer/actions/workflows/build.yml)
+
 News viewer for FKG
 
 ## :sparkles: Features
