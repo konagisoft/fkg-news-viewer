@@ -54,6 +54,7 @@ jobs:
 
       - name: Generate artifact attestation
         # attest-build-provenance@v2.2.2
+        if: github.event_name != 'pull_request'
         uses: actions/attest-build-provenance@bd77c077858b8d561b7a36cbe48ef4cc642ca39d
         with:
           subject-name: fkg-news-viewer
