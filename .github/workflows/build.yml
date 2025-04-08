@@ -39,6 +39,7 @@ jobs:
         run: msbuild -t:Publish -t:Rebuild -p:Configuration=Release -p:EnableUpdateable=false
 
       - name: Create third party notices
+        if: github.event_name != 'pull_request'
         run: |
           dotnet tool install -g DotnetThirdPartyNotices
           dotnet-thirdpartynotices .\src --output-filename ${{ env.LICENSE_NAME }}
@@ -46,6 +47,7 @@ jobs:
 
       - name: Upload artifact
         id: upload
+        if: github.event_name != 'pull_request'
         # upload-artifact@v4.6.1
         uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1
         with:
