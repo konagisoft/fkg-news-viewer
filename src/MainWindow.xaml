@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:FkgNewsViewer"
         xmlns:wpf="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:p="clr-namespace:FkgNewsViewer.Properties"
         mc:Ignorable="d"
@@ -11,11 +10,11 @@
     <Grid>
         <DockPanel LastChildFill="True">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="{x:Static p:Resources.TAB_RELOAD}" Click="Reload_Click"/>
-                <MenuItem Header="{x:Static p:Resources.TAB_REDIRECT}" Click="Transit_Click"/>
-                <MenuItem Header="{x:Static p:Resources.TAB_PRINT}" Click="Print_Click"/>
+                <MenuItem Header="{x:Static p:Resources.TAB_RELOAD}" Click="Reload_Click" />
+                <MenuItem Header="{x:Static p:Resources.TAB_REDIRECT}" Click="Transit_Click" />
+                <MenuItem Header="{x:Static p:Resources.TAB_PRINT}" Click="Print_Click" />
             </Menu>
-            <wpf:WebView2 DockPanel.Dock="Top" Name="WebView" Source="{Binding SourceUrl}"/>
+            <wpf:WebView2 DockPanel.Dock="Top" Name="WebView" Source="{Binding SourceUrl}" />
         </DockPanel>
     </Grid>
 </Window>

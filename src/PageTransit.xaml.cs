@@ -28,13 +28,15 @@ namespace FkgNewsViewer
         public PageTransit(int maxPage)
         {
             InitializeComponent();
-            MaxPage.Text = maxPage > 0 ? maxPage.ToString() : Properties.Resources.ResourceManager.GetString("WIN_PAGE_TRANSIT_NULL", Properties.Resources.Culture);
+            MaxPage.Text = maxPage > 0
+                ? maxPage.ToString()
+                : Properties.Resources.ResourceManager.GetString("WIN_PAGE_TRANSIT_NULL", Properties.Resources.Culture);
         }
 
         private void Window_SourceInitialized(object sender, EventArgs e)
         {
-            var hwnd = new System.Windows.Interop.WindowInteropHelper((Window) sender).Handle;
-            var hMenu = GetSystemMenu(hwnd, false);
+            IntPtr hwnd = new System.Windows.Interop.WindowInteropHelper((Window) sender).Handle;
+            IntPtr hMenu = GetSystemMenu(hwnd, false);
             RemoveMenu(hMenu, SC_MAXIMIZE, MF_BYCOMMAND);
             RemoveMenu(hMenu, SC_MINIMIZE, MF_BYCOMMAND);
         }
@@ -51,9 +53,6 @@ namespace FkgNewsViewer
             DialogResult = true;
         }
 
-        private void Cancel_Click(object sender, RoutedEventArgs e)
-        {
-            DialogResult = false;
-        }
+        private void Cancel_Click(object sender, RoutedEventArgs e) => DialogResult = false;
     }
 }
