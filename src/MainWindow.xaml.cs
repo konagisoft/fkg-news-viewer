@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
+using Microsoft.Web.WebView2.Wpf;
 
 namespace FkgNewsViewer
 {
@@ -16,6 +17,16 @@ namespace FkgNewsViewer
             InitializeComponent();
 
             DataContext = new { SourceUrl = SourceUrl() };
+#if (!DEBUG)
+            WebView.CoreWebView2InitializationCompleted += (sender, args) =>
+            {
+                if (args.IsSuccess)
+                {
+                    var wv2 = (WebView2) sender;
+                    wv2.CoreWebView2.Settings.AreDevToolsEnabled = false;
+                }
+            };
+#endif
         }
 
         private void Reload_Click(object sender, RoutedEventArgs e)
